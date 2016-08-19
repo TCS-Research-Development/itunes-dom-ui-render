@@ -1,0 +1,23 @@
+{
+  "name": "reactjs-databinding",
+  "version": "1.0.0",
+  "description": "Binding CSV databing with node and react.js",
+  "main": "server.js",
+  "scripts": {
+    "test": "npm start"
+  },
+  "keywords": [
+    "DataBinding",
+    "with",
+    "ReactJS",
+    "CSV2JSON",
+    "ReactJSON",
+    "Binding",
+    "React",
+    "Binding",
+    "Componenet",
+    "Binding"
+  ],
+  "author": "tcstycons",
+  "license": "MIT"
+}
