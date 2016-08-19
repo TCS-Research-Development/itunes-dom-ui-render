@@ -1,0 +1,18 @@
+.img-responsive
+{
+    width: 50%; 
+    border-radius : 15px;
+    margin-left: 25%;
+}
+
+.jumbotron{
+    background-color: #dddddd;
+}
+
+.body{
+    background-color: #f1f1f1;
+}
+
+.col-sm-4{
+    margin-bottom: 50px;
+}
