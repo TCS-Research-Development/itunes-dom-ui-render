@@ -16,6 +16,7 @@
     "react": "^15.0.2",
     "react-addons-pure-render-mixin": "^15.0.2",
     "react-dom": "^15.0.2",
+    "react-logger": "^1.1.0",
     "react-router": "^2.4.0",
     "restify": "^4.0.4"
   },

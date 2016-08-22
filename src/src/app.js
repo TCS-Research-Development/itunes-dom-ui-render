@@ -1,36 +1,47 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
+var LoggerMixin = require('react-logger');
 var $ = require('jquery');
 
 
 var App = React.createClass({
+  displayName: 'AppComponent',
+  // Add mixin 
+  mixins: [LoggerMixin],
   getInitialState: function() {
     return {itunes: []};
   },
 componentWillMount() {
-      console.log('Component WILL MOUNT!')
+      this.log('Component WILL MOUNT!')
    },
 
    componentDidMount() {
-      console.log('Component DID MOUNT!');
+      this.log('Component DID MOUNT!');
       this.loadData();
    },
 
    componentWillUpdate(nextProps, nextState) {
-      console.log('Component WILL UPDATE!');
+      this.log('Component WILL UPDATE!');
    },
 
    componentDidUpdate(prevProps, prevState) {
-      console.log('Component DID UPDATE!')
+      this.log('Component DID UPDATE!')
    },
   
 loadData: function(){
 	
-$.ajax('/getItunes').done(function(data) {
+$.ajax({
+     type: "get", url: "/getItunes",
+     success: function (data, text) {
       this.setState({itunes: data});
- }.bind(this));
+     }.bind(this),
+     error: function (request, status, error) {
+      this.log(request.responseText);
+    }
+ });
 },
   render: function() {
+    try{
 
 var listAlbum = this.state.itunes.map(function(album) {
       return (
@@ -45,6 +56,10 @@ var listAlbum = this.state.itunes.map(function(album) {
             </div>
       );
     });
+  }catch(err){
+     log.this(err);
+
+  }
 
 
     return (
