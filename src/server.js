@@ -11,12 +11,12 @@
          //console.log(result);
         if(err){
            var resObj = {status:"failure", errorCode:"100", errorDesc:"something went wrong while reading the data"};
-            return res.json(resObj);
+            res.json(resObj);
             res.end();
          }
          if (result.length === 0) {
             var resObj = {status:"info", infoCode:"101", infoDesc:"No Records found"};
-            return res.json(resObj);
+            res.json(resObj);
             res.end();
         }
         else{
