@@ -1,6 +1,10 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 var LoggerMixin = require('react-logger');
+var Router = require('react-router').Router;
+var Route = require('react-router').Route;
+var Link = require('react-router').Link;
+
 var $ = require('jquery');
 
 
@@ -9,7 +13,7 @@ var App = React.createClass({
   // Add mixin 
   mixins: [LoggerMixin],
   getInitialState: function() {
-    return {itunes: []};
+    return {"status":{},"data":[]};
   },
 componentWillMount() {
       this.log('Component WILL MOUNT!')
@@ -33,7 +37,8 @@ loadData: function(){
 $.ajax({
      type: "get", url: "/getItunes",
      success: function (data, text) {
-      this.setState({itunes: data});
+      console.log(data);
+      this.setState(data);
      }.bind(this),
      error: function (request, status, error) {
       this.log(request.responseText);
@@ -43,7 +48,7 @@ $.ajax({
   render: function() {
     try{
 
-var listAlbum = this.state.itunes.map(function(album) {
+var listAlbum = this.state.data.map(function(album) {
       return (
         <div className="col-sm-4">
               <a href={album.previewUrl}>
@@ -57,41 +62,15 @@ var listAlbum = this.state.itunes.map(function(album) {
       );
     });
   }catch(err){
-     log.this(err);
+     console.log(err);
 
   }
 
 
     return (
       <div>
-        <nav className="navbar navbar-inverse">
-          <div className="container-fluid">
-            <div className="navbar-header">
-              <button type="button" className="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                <span className="icon-bar" />
-                <span className="icon-bar" />
-                <span className="icon-bar" />
-              </button>
-              
-              <a className="navbar-brand" href="#">iStore</a>
-            </div>
-            <div className="collapse navbar-collapse" id="myNavbar">
-              <ul className="nav navbar-nav">
-                <li className="active"><a href="#">Home</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Gallery</a></li>
-                <li><a href="#">Contact</a></li>
-              </ul>
-            
-            </div>
-          </div>
-        </nav>
-        <div className="jumbotron" >
-          <div className="container text-center">
-            <h1>My Music</h1>
-            <p>Listen to all your favourite tracks...</p>
-          </div>
-        </div>
+          
+          <Link to={'/csvUpload/'}>Upload Csv</Link>
         <div className="container-fluid bg-3 text-center">
           <h3>Albums</h3><br />
           <div className="row" >
@@ -106,4 +85,38 @@ var listAlbum = this.state.itunes.map(function(album) {
   }
 });
 
- ReactDOM.render(<App />, document.getElementById("main"));
+var CsvUpload = React.createClass({
+  displayName: 'AppComponent',
+  // Add mixin 
+  mixins: [LoggerMixin],
+  render: function() {
+    return(<div>
+<section id="upload-data-panel">
+    <form id="upload-form" action="/upload/data" method="post" enctype="multipart/form-data">
+        
+           
+            <div>
+              
+                <input type="file" name="csvdata" accept="text/cvs" />
+            </div>
+            <div>
+                <input type="submit" value="Submit"/>
+            </div>
+       
+    </form>
+</section>
+    </div>)
+  }
+
+  });
+
+ReactDOM.render(
+  (
+    <Router>
+      <Route path="/" component={App} />
+      <Route path="/csvUpload" component={CsvUpload} />
+     
+    </Router>
+  ),
+  document.getElementById('main')
+);
