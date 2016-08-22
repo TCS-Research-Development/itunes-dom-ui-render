@@ -27,7 +27,7 @@
   }
     catch(err){
         var resObj = {status:"failure", errorCode:"102", errorDesc:"something went wrong while reading the data"};
-        return res.json(resObj);
+       res.json(resObj);
   };  
 
       
