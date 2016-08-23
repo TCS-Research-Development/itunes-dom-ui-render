@@ -52,8 +52,78 @@
 	var Router = __webpack_require__(176).Router;
 	var Route = __webpack_require__(176).Route;
 	var Link = __webpack_require__(176).Link;
-
+	var BrowserHistory = __webpack_require__(176).browserHistory;
+	var IndexRoute = __webpack_require__(176).IndexRoute;
 	var $ = __webpack_require__(239);
+
+	var notFound = React.createClass({
+	  displayName: 'notFound',
+
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      null,
+	      React.createElement(
+	        'h2',
+	        null,
+	        'Page NOT FOUND 404'
+	      )
+	    );
+	  }
+	});
+	var NewOneComp = React.createClass({
+	  displayName: 'NewOneComp',
+
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      null,
+	      React.createElement(
+	        'h2',
+	        null,
+	        'New one '
+	      )
+	    );
+	  }
+	});
+
+	var CsvUploadComp = React.createClass({
+	  displayName: 'CsvUploadComp',
+
+
+	  uploadFile: function uploadFile() {
+	    var fd = new FormData();
+	    fd.append('file', this.refs.file.getDOMNode().files[0]);
+
+	    $.ajax({
+	      url: '/upload',
+	      data: fd,
+	      processData: false,
+	      contentType: false,
+	      type: 'POST',
+	      success: function success(data) {
+	        alert(data);
+	      }
+	    });
+	  },
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      null,
+	      React.createElement(
+	        'section',
+	        { id: 'upload-data-panel' },
+	        React.createElement(
+	          'form',
+	          { id: 'upload-form', action: this.uploadFile, method: 'post', enctype: 'multipart/form-data' },
+	          React.createElement('input', { type: 'file', name: 'csvdata', accept: 'text/cvs' }),
+	          React.createElement('input', { type: 'submit', value: 'Submit', onClick: this.uploadFile })
+	        )
+	      )
+	    );
+	  }
+
+	});
 
 	var App = React.createClass({
 	  displayName: 'AppComponent',
@@ -62,20 +132,23 @@
 	  getInitialState: function getInitialState() {
 	    return { "status": {}, "data": [] };
 	  },
-	  componentWillMount: function componentWillMount() {
-	    this.log('Component WILL MOUNT!');
-	  },
+
 	  componentDidMount: function componentDidMount() {
 	    this.log('Component DID MOUNT!');
 	    this.loadData();
 	  },
-	  componentWillUpdate: function componentWillUpdate(nextProps, nextState) {
-	    this.log('Component WILL UPDATE!');
-	  },
-	  componentDidUpdate: function componentDidUpdate(prevProps, prevState) {
-	    this.log('Component DID UPDATE!');
-	  },
 
+
+	  //For future reference
+	  /*componentWillMount() {
+	     this.log('Component WILL MOUNT!')
+	  },
+	   componentWillUpdate(nextProps, nextState) {
+	     this.log('Component WILL UPDATE!');
+	  },
+	   componentDidUpdate(prevProps, prevState) {
+	     this.log('Component DID UPDATE!')
+	  },*/
 
 	  loadData: function loadData() {
 
@@ -96,7 +169,7 @@
 	      var listAlbum = this.state.data.map(function (album) {
 	        return React.createElement(
 	          'div',
-	          { className: 'col-sm-4' },
+	          { className: 'col-sm-5' },
 	          React.createElement(
 	            'a',
 	            { href: album.previewUrl },
@@ -126,9 +199,26 @@
 	      'div',
 	      null,
 	      React.createElement(
-	        Link,
-	        { to: '/csvUpload/' },
-	        'Upload Csv'
+	        'ul',
+	        null,
+	        React.createElement(
+	          'li',
+	          null,
+	          React.createElement(
+	            Link,
+	            { to: 'csvUpload' },
+	            'Upload Csv'
+	          )
+	        ),
+	        React.createElement(
+	          'li',
+	          null,
+	          React.createElement(
+	            Link,
+	            { to: 'newOne' },
+	            'new one'
+	          )
+	        )
 	      ),
 	      React.createElement(
 	        'div',
@@ -153,42 +243,13 @@
 	  }
 	});
 
-	var CsvUpload = React.createClass({
-	  displayName: 'AppComponent',
-	  // Add mixin 
-	  mixins: [LoggerMixin],
-	  render: function render() {
-	    return React.createElement(
-	      'div',
-	      null,
-	      React.createElement(
-	        'section',
-	        { id: 'upload-data-panel' },
-	        React.createElement(
-	          'form',
-	          { id: 'upload-form', action: '/upload/data', method: 'post', enctype: 'multipart/form-data' },
-	          React.createElement(
-	            'div',
-	            null,
-	            React.createElement('input', { type: 'file', name: 'csvdata', accept: 'text/cvs' })
-	          ),
-	          React.createElement(
-	            'div',
-	            null,
-	            React.createElement('input', { type: 'submit', value: 'Submit' })
-	          )
-	        )
-	      )
-	    );
-	  }
-
-	});
-
 	ReactDOM.render(React.createElement(
 	  Router,
-	  null,
+	  { history: BrowserHistory },
 	  React.createElement(Route, { path: '/', component: App }),
-	  React.createElement(Route, { path: '/csvUpload', component: CsvUpload })
+	  React.createElement(Route, { path: 'csvUpload', component: CsvUploadComp }),
+	  React.createElement(Route, { path: 'newOne', component: NewOneComp }),
+	  React.createElement(Route, { path: '*', component: notFound })
 	), document.getElementById('main'));
 
 /***/ },
