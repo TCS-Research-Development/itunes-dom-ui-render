@@ -1,8 +1,9 @@
 .img-responsive
 {
-    width: 50%; 
-    border-radius : 15px;
-    margin-left: 25%;
+    width: 100%; 
+    border-radius : 5px;
+    z-index: 1;
+    
 }
 
 .jumbotron{
@@ -13,6 +14,39 @@
     background-color: #f1f1f1;
 }
 
-.col-sm-4{
+.col-sm-2{
     margin-bottom: 50px;
+}
+.col-md-2{
+    margin-bottom: 50px;
+}
+.col-half-offset{
+    margin-left:2.666666667%
+}
+.wrap{
+    width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    position: relative;
+    text-overflow: ellipsis;
+    
+}
+/*.wrap :hover
+{
+    overflow: visible; 
+    white-space: normal;
+    z-index: -1;
+    position: relative;
+}*/
+
+.artist{
+    width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    position: relative;
+    text-overflow: ellipsis;
+    color: darkgray
+}
+h3{
+    text-align: left;
 }

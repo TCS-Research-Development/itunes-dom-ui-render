@@ -71,54 +71,33 @@
 	    );
 	  }
 	});
-	var NewOneComp = React.createClass({
-	  displayName: 'NewOneComp',
+
+	var Album = React.createClass({
+	  displayName: 'Album',
+
 
 	  render: function render() {
 	    return React.createElement(
 	      'div',
-	      null,
+	      { className: 'col-sm-2 col-md-2 col-half-offset' },
 	      React.createElement(
-	        'h2',
-	        null,
-	        'New one '
-	      )
-	    );
-	  }
-	});
-
-	var CsvUploadComp = React.createClass({
-	  displayName: 'CsvUploadComp',
-
-
-	  uploadFile: function uploadFile() {
-	    var fd = new FormData();
-	    fd.append('file', this.refs.file.getDOMNode().files[0]);
-
-	    $.ajax({
-	      url: '/upload',
-	      data: fd,
-	      processData: false,
-	      contentType: false,
-	      type: 'POST',
-	      success: function success(data) {
-	        alert(data);
-	      }
-	    });
-	  },
-	  render: function render() {
-	    return React.createElement(
-	      'div',
-	      null,
+	        'a',
+	        { href: this.props.album.previewUrl },
+	        React.createElement('img', { id: '', src: this.props.album.artworkUrl100, className: 'img-responsive', alt: 'Image' })
+	      ),
 	      React.createElement(
-	        'section',
-	        { id: 'upload-data-panel' },
+	        'p',
+	        { className: 'wrap' },
 	        React.createElement(
-	          'form',
-	          { id: 'upload-form', action: this.uploadFile, method: 'post', enctype: 'multipart/form-data' },
-	          React.createElement('input', { type: 'file', name: 'csvdata', accept: 'text/cvs' }),
-	          React.createElement('input', { type: 'submit', value: 'Submit', onClick: this.uploadFile })
+	          'b',
+	          null,
+	          this.props.album.trackName
 	        )
+	      ),
+	      React.createElement(
+	        'p',
+	        { className: 'artist' },
+	        this.props.album.artistName
 	      )
 	    );
 	  }
@@ -167,29 +146,7 @@
 	    try {
 
 	      var listAlbum = this.state.data.map(function (album) {
-	        return React.createElement(
-	          'div',
-	          { className: 'col-sm-5' },
-	          React.createElement(
-	            'a',
-	            { href: album.previewUrl },
-	            React.createElement('img', { id: '', src: album.artworkUrl100, className: 'img-responsive', alt: 'Image' })
-	          ),
-	          React.createElement(
-	            'p',
-	            null,
-	            React.createElement(
-	              'b',
-	              null,
-	              album.trackName
-	            )
-	          ),
-	          React.createElement(
-	            'p',
-	            null,
-	            album.artistName
-	          )
-	        );
+	        return React.createElement(Album, { album: album });
 	      });
 	    } catch (err) {
 	      console.log(err);
@@ -199,33 +156,11 @@
 	      'div',
 	      null,
 	      React.createElement(
-	        'ul',
-	        null,
-	        React.createElement(
-	          'li',
-	          null,
-	          React.createElement(
-	            Link,
-	            { to: 'csvUpload' },
-	            'Upload Csv'
-	          )
-	        ),
-	        React.createElement(
-	          'li',
-	          null,
-	          React.createElement(
-	            Link,
-	            { to: 'newOne' },
-	            'new one'
-	          )
-	        )
-	      ),
-	      React.createElement(
 	        'div',
 	        { className: 'container-fluid bg-3 text-center' },
 	        React.createElement(
 	          'h3',
-	          null,
+	          { className: 'col-half-offset' },
 	          'Albums'
 	        ),
 	        React.createElement('br', null),
@@ -247,9 +182,7 @@
 	  Router,
 	  { history: BrowserHistory },
 	  React.createElement(Route, { path: '/', component: App }),
-	  React.createElement(Route, { path: 'csvUpload', component: CsvUploadComp }),
-	  React.createElement(Route, { path: 'newOne', component: NewOneComp }),
-	  React.createElement(Route, { path: '*', component: notFound })
+	  React.createElement(Route, { path: '*', status: '404', component: notFound })
 	), document.getElementById('main'));
 
 /***/ },
