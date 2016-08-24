@@ -5,12 +5,7 @@
 
 ### Steps to Run Code
 
- step1:Clone the repositary in your local machine.
- 
- step2:Switch to the branches either Release#1 or Release#2(refer github documentaion to checkout branches).
-
- step3:give npm install.
-
- step4:Then run webpack to bundle the Reactjs Application.
- 
- step5:run npm start to view application on https//localhost:8080.
+1. Clone code using GitHub URL `https://github.com/TCS-Research-Development/itunes-dom-ui-render.git`.
+2. Navigate to subfolder`src`.
+3. Run `npm install` in commnd prompt to download all dependencies.
+4. Access URL in browser [https//localhost:8080].
