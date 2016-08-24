@@ -1,8 +1,8 @@
-## itunes-dom-ui-render
+# itunes-dom-ui-render
 iTunes Sample Data Rendering in ReactJS
-#Prerequisities
+##Prerequisities
 node and npm packages to be installed in your local machine.(if not Refer nodejs.org to install node).
-#Usage
+##Usage
  step1:Clone the repositary in your local machine.
  
  step2:Switch to the branches either Release#1 or Release#2(refer github documentaion to checkout branches).
