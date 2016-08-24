@@ -1,10 +1,10 @@
-# iTunes Databinding to React-DOM
+## iTunes Databinding to React-DOM
 ---------------------------------
-- This code repo uploads CSV(file holds itunes data) file with file upload control.
+- This code repo uploads CSV(file holds itunes data ([file](https://github.com/TCS-Research-Development/itunes-dom-ui-render/blob/master/docs/Itunes-data-exposed.xlsx)) file with file upload control.
 - The CSV data will be rendered using React-DOM technique.
 
-## Steps to Run Code
---------------------
+### Steps to Run Code
+
  step1:Clone the repositary in your local machine.
  
  step2:Switch to the branches either Release#1 or Release#2(refer github documentaion to checkout branches).
