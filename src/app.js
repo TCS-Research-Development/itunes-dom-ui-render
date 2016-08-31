@@ -136,7 +136,14 @@ var App = React.createClass({
      type: "get", url: "/getItunes",
      success: function (data, text) {
       console.log(data);
+      if(data.status == "info")
+      alert("No data found");
+      if(data.status == "failure")
+      alert("Error occured while reading the data..check whether you have proper data in temp folder or not");
+      if(data.status == "success")
+      {
       this.setState(data);
+      }
      }.bind(this),
      error: function (request, status, error) {
       this.log(request.responseText);
