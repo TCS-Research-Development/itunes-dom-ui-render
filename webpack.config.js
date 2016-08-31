@@ -4,7 +4,7 @@ var webpack = require('webpack');
 module.exports = {
   context: path.join(__dirname, './src'),
   entry: {
-    javascript: './app.js',
+    javascript: './main.js',
    // html: '/static/index.html'
   },
   output: { 

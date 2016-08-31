@@ -27,7 +27,7 @@ describe("Itune Application API Testing", function() {
          .get('/getItunes')
          .end(function(err, res){
          res.body.should.be.a('object');
-         res.body.status.should.equal("info");
+         res.body.status.should.not.equal("info");
         
          done();
      });
@@ -37,7 +37,7 @@ describe("Itune Application API Testing", function() {
          .get('/getItunes')
          .end(function(err, res){
          res.body.should.be.a('object');
-         res.body.status.should.equal("failure");
+         res.body.status.should.not.equal("failure");
         
          done();
      });

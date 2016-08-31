@@ -1,10 +1,7 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 var LoggerMixin = require('react-logger');
-var Router = require('react-router').Router;
-var Route = require('react-router').Route;
 var Link = require('react-router').Link;
-var BrowserHistory = require('react-router').browserHistory;
 var IndexRoute = require('react-router').IndexRoute;
 var $ = require('jquery');
 var Rb = require('react-bootstrap');
@@ -180,15 +177,7 @@ var App = React.createClass({
   });
 
 
-$(document).ready(function () {
+  
 
-  ReactDOM.render((
-    <Router history = {BrowserHistory}>
-        <Route path = "/" component = {App} />
-        <Route path = "/csvUpload" component = {ModalInstance} />
-         <Route path = "*" status="404" component = {notFound}/>
-         </Router> 
-   ),document.getElementById('main'));
-});
 
 module.exports = App;
