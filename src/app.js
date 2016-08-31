@@ -7,6 +7,11 @@ var Link = require('react-router').Link;
 var BrowserHistory = require('react-router').browserHistory;
 var IndexRoute = require('react-router').IndexRoute;
 var $ = require('jquery');
+var Rb = require('react-bootstrap');
+var Modal = require('react-bootstrap').Modal;
+var Button = require('react-bootstrap').Button;
+
+
 
 var notFound = React.createClass({
    render: function() {
@@ -16,54 +21,91 @@ var notFound = React.createClass({
 
   }
   });
-var NewOneComp = React.createClass({
-   render: function() {
-  return(<div>
-  <h2>New one </h2>
-  </div>)
 
-  }
-  });
 
-var CsvUploadComp = React.createClass({
 
-  uploadFile: function () {
-        var fd = new FormData();    
-        fd.append('file', this.refs.file.getDOMNode().files[0]);
+var Album = React.createClass({
+render: function()
+ {
+   return(
+      <div className="col-sm-2 col-md-2 col-half-offset">
+              <a href={this.props.album.previewUrl}>
 
-        $.ajax({
-            url: '/upload',
-            data: fd,
-            processData: false,
-            contentType: false,
-            type: 'POST',
-            success: function(data){
-                alert(data);
-            } 
-        });
-    },
+              <img id="" src={this.props.album.artworkUrl100} className="img-responsive" alt="Image" />
+              </a>
+              <p className="wrap"><b>{this.props.album.trackName}</b></p>
+              <p className="artist">{this.props.album.artistName}</p>
+     </div>
+   );
+ }
+});
+
+var CsvUpload = React.createClass({
+  displayName: 'AppComponent',
+  // Add mixin 
+  mixins: [LoggerMixin],
   render: function() {
     return(<div>
-  <section id="upload-data-panel">
-    <form id="upload-form"  action={this.uploadFile} method="post" enctype="multipart/form-data">
+      <section id="upload-data-panel">
+          <form id="upload-form" action="/upload/data" method="post" encType="multipart/form-data">
         
            
            
               
                 <input type="file" name="csvdata" accept="text/cvs" />
             
-           
-                <input type="submit" value="Submit" onClick={this.uploadFile}/>
+                <input type="submit" name="submit" value="submit"/>
             
        
-    </form>
-  </section>
+            </form>
+      </section>
     </div>)
   }
 
   });
 
+const ModalInstance = React.createClass({
+ getInitialState(){
+    return { showModal: false };
+  },
 
+  closeModal(){
+    this.setState({ showModal: false });
+  },
+
+  openModal(){
+    this.setState({ showModal: true });
+  }, 
+
+  render:function(){ 
+   return(
+  <div className="static-modal">
+    <Button className="upload" onClick={this.openModal}>
+          Upload CSV
+     </Button>
+
+    <Modal show={this.state.showModal} onHide={this.closeModal}>
+    
+      <Modal.Header closeButton>
+        <Modal.Title>Upload CSV File</Modal.Title>
+      </Modal.Header>
+
+      <Modal.Body>
+        <form id="upload-form" action="/upload/data" method="post" encType="multipart/form-data">
+           <input type="file" name="csvdata" accept=".csv" />
+           <hr/>
+           <input className="submit" type="submit" name="submit" value="Submit"/>
+           <Button className="shut" onClick={this.closeModal}>Close</Button>
+           <br/>
+           <br/>
+        </form>
+      </Modal.Body>
+      
+    </Modal>
+  </div>
+);
+}
+});
 
 var App = React.createClass({
   displayName: 'AppComponent',
@@ -109,32 +151,22 @@ var App = React.createClass({
 
   var listAlbum = this.state.data.map(function(album) {
       return (
-        <div className="col-sm-5">
-              <a href={album.previewUrl}>
-
-              <img id="" src={album.artworkUrl100} className="img-responsive" alt="Image" />
-              </a>
-              <p><b>{album.trackName}</b></p>
-              <p>{album.artistName}</p>
-
-            </div>
+       <Album  album={album} />
       );
     });
   }catch(err){
      console.log(err);
 
   }
-
-
-    return (
+ return (
       <div>
           
-          <ul>
-          <li><Link to={'csvUpload'}>Upload Csv</Link></li>
-          <li><Link to={'newOne'}>new one</Link></li>
-          </ul>
+        <div>
+            <ModalInstance />
+        </div>
+
         <div className="container-fluid bg-3 text-center">
-          <h3>Albums</h3><br />
+          <h3 className="col-half-offset">Albums</h3><br />
           <div className="row" >
             {listAlbum}
             </div>
@@ -148,13 +180,13 @@ var App = React.createClass({
   });
 
 
+$(document).ready(function () {
 
   ReactDOM.render((
     <Router history = {BrowserHistory}>
         <Route path = "/" component = {App} />
-         <Route path = "csvUpload" component = {CsvUploadComp} />
-         <Route path = "newOne" component = {NewOneComp} />
-         <Route path = "*" component = {notFound}/>
-      
-   </Router> 
+        <Route path = "/csvUpload" component = {ModalInstance} />
+         <Route path = "*" status="404" component = {notFound}/>
+         </Router> 
    ),document.getElementById('main'));
+});
