@@ -1,26 +1,46 @@
 var express = require('express');
-var busboy = require('connect-busboy'); //middleware for form/file upload
-var path = require('path');     //used for file path
-var fs = require('fs-extra');       //File System - for file manipulation
-var fs = require('formidable');       
 var app = express();
-app.use(busboy());
-  var Converter = require("csvtojson").Converter;
-  var csv = require("csv");
-
-  app.use(express.static('static'));
+var Converter = require("csvtojson").Converter;
+var fs = require("fs");
+var csv = require("csv");
+var bodyParser = require('body-parser');
+var multer  = require('multer'); 
   
-  app.get('/getItunes',function(req,res){
-    var converter = new Converter({});
-    try{
-        converter.fromFile("./itunes.csv",function(err,result){
-         //console.log(result);
+app.use(express.static('static'));
+
+
+//function to set destination and filename to the uploaded file.
+var storage = multer.diskStorage({
+   destination: function (req, file, cb) {
+     var dir = './temp';
+     if (!fs.existsSync(dir)){
+      fs.mkdirSync(dir);
+      console.log("directory doesn't exist");
+      }
+     else{
+      console.log("directory exist");
+      }
+     cb(null, './temp')
+   },
+  filename: function (req, file, cb) {
+     cb(null, Math.floor(Date.now()/1000) + '.csv')
+   }
+})
+var upload = multer({ storage: storage });
+
+ 
+//function to convert csv to json and send the response object.
+var convertTheCsvToJson = function(req, res, fileName){
+  var converter = new Converter({});
+  fileName = "./temp/"+ fileName;
+  converter.fromFile(fileName, function(err,result){
+       
         if(err){
            var resObj = {status:"failure", errorCode:"100", errorDesc:"something went wrong while reading the data"};
             res.json(resObj);
             res.end();
          }
-         if (result.length === 0) {
+         if (!result || result.length === 0) {
             var resObj = {status:"info", infoCode:"101", infoDesc:"No Records found"};
             res.json(resObj);
             res.end();
@@ -30,72 +50,34 @@ app.use(busboy());
          res.json(resObj);
          }
       })
-  }
+ };
+
+ 
+ //get service to get the csv file from the temp directory. 
+  app.get('/getItunes',function(req,res){
+    try{
+    var path="./temp/";
+    var filesArry = fs.readdirSync(path);
+    var csvFile = fs.readdirSync(path).slice(-1)[0];
+    console.log(csvFile);
+    convertTheCsvToJson(req, res, csvFile);
+    }
     catch(err){
         var resObj = {status:"failure", errorCode:"102", errorDesc:"something went wrong while reading the data"};
-       res.json(resObj);
+        res.json(resObj);
   };  
 
-      
 });  
 
-/*app.post('/upload', function(req, res) {
-        // the name under "files" must correspond to the name of the
-        // file input field in the submitted form (here: "csvdata")
-        var fstream;
-        req.pipe(req.busboy);
-        req.busboy.on('file', function (fieldname, file, filename) {
-            console.log("Uploading: " + filename);
 
-            //Path where image will be uploaded
-            fstream = fs.createWriteStream(__dirname +'/static/' + filename);
-            file.pipe(fstream);
-            fstream.on('close', function () {    
-                console.log("Upload Finished of " + filename);              
-                res.redirect('back');           //where to go next
-            });
-        });
-   
+//post method to upload the csv file into the temp deirectory.
+app.post("/upload/data",upload.any(), function(req, res) {
+       console.log(req.files);
+      res.redirect("http://localhost:8080/");
+        
+    }); 
 
-       res.json("data submitted");
-    }); */
-
-
-
-app.post('/upload', function(req, res){
-
-  // create an incoming form object
-  var form = new formidable.IncomingForm();
-
-  // specify that we want to allow the user to upload multiple files in a single request
-  form.multiples = true;
-
-  // store all uploads in the /uploads directory
-  form.uploadDir = path.join(__dirname, '/static');
-
-  // every time a file has been uploaded successfully,
-  // rename it to it's orignal name
-  form.on('file', function(field, file) {
-    fs.rename(file.path, path.join(form.uploadDir, file.name));
-  });
-
-  // log any errors that occur
-  form.on('error', function(err) {
-    console.log('An error has occured: \n' + err);
-  });
-
-  // once all the files have been uploaded, send a response to the client
-  form.on('end', function() {
-    res.end('success');
-  });
-
-  // parse the incoming request containing the form data
-  form.parse(req);
-
+var server=app.listen(8080, function(){
+      console.log('itune app listening on port 8080');
 });
-
-
-
-app.listen(8082, function(){
-      console.log('itune app listening on port 8082');
-});
+module.exports = server;
