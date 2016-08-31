@@ -10,12 +10,12 @@
   },
   "jest": {
     "scriptPreprocessor": "<rootDir>/node_modules/babel-jest",
-     "unmockedModulePathPatterns": [
+    "unmockedModulePathPatterns": [
       "<rootDir>/node_modules/react",
       "<rootDir>/node_modules/react-dom",
       "<rootDir>/node_modules/react-addons-test-utils",
       "<rootDir>/node_modules/fbjs"
-]
+    ]
   },
   "author": "",
   "license": "ISC",
@@ -23,6 +23,7 @@
     "babel-jest": "^14.1.0",
     "body-parser": "^1.15.2",
     "botbuilder": "^0.9.2",
+    "csvtojson": "^1.0.0",
     "express": "^4.13.4",
     "jest-cli": "^14.1.0",
     "jquery": "^2.2.3",
@@ -30,6 +31,7 @@
     "react": "^15.0.2",
     "react-addons-pure-render-mixin": "^15.0.2",
     "react-addons-test-utils": "^15.3.1",
+    "react-bootstrap": "^0.30.3",
     "react-dom": "^15.0.2",
     "react-logger": "^1.1.0",
     "react-router": "^2.4.0",
