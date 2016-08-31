@@ -190,3 +190,5 @@ $(document).ready(function () {
          </Router> 
    ),document.getElementById('main'));
 });
+
+module.exports = App;
