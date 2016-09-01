@@ -1,0 +1,18 @@
+[2016-09-01 19:14:36.073] [DEBUG] my_project - success
+[2016-09-01 19:15:05.703] [DEBUG] my_project - log test!!!!
+[2016-09-01 19:15:08.024] [DEBUG] my_project - success
+[2016-09-01 19:15:30.847] [DEBUG] my_project - log test!!!!
+[2016-09-01 19:16:26.254] [DEBUG] my_project - log test!!!!
+[2016-09-01 19:17:34.091] [DEBUG] my_project - log test!!!!
+[2016-09-01 19:18:30.297] [DEBUG] my_project - success
+[2016-09-01 19:20:33.572] [DEBUG] my_project - log test!!!!
+[2016-09-01 19:20:38.800] [DEBUG] my_project - success
+[2016-09-01 19:20:56.311] [DEBUG] my_project - log test!!!!
+[2016-09-01 19:20:58.762] [INFO] my_project - { status: 'info', infoCode: '101', infoDesc: 'No Records found' }
+[2016-09-01 19:21:32.539] [DEBUG] my_project - log test!!!!
+[2016-09-01 19:21:35.095] [DEBUG] my_project - { status: 'info', infoCode: '101', infoDesc: 'No Records found' }
+[2016-09-01 19:21:49.288] [DEBUG] my_project - success
+[2016-09-01 19:22:10.665] [DEBUG] my_project - log test!!!!
+[2016-09-01 19:23:11.572] [DEBUG] my_project - success
+[2016-09-01 19:27:57.554] [DEBUG] my_project - log test!!!!
+[2016-09-01 19:28:05.165] [DEBUG] my_project - success

@@ -11,10 +11,29 @@ var fs = require("fs");
 var csv = require("csv");
 var bodyParser = require('body-parser');
 var multer  = require('multer'); 
+var log4js = require("log4js");
+log4js.configure({
+  appenders: [
+	            {
+	            	type: "console"
+	            },
+	            {
+	            	type: "file",
+	            	filename: "test.log",
+	            	category: "my_project"
+	            }
+	]
+});
 
+var logger = log4js.getLogger("my_project");
+logger.setLevel("DEBUG");
+
+logger.debug("log test!!!!");
 
 /* Registering express middleware to expose server data as JSON */  
 app.use(express.static('static'));
+
+
 
 /**
  * Name: storage 
@@ -30,9 +49,10 @@ var storage = multer.diskStorage({
      /* Filesystem to handle the temp directory availability in app path  */
      if (!fs.existsSync(dir)){
          fs.mkdirSync(dir);
-         console.log("directory doesn't exist");
+          logger.debug("directory doesn't exist");
       }else{
-        console.log("directory exist");
+         logger.debug("directory exist");
+       
       }
      cb(null, './temp')
    },
@@ -61,17 +81,21 @@ var convertTheCsvToJson = function(req, res, fileName){
         if(err){
            var resObj = {status:"failure", errorCode:"100", errorDesc:"something went wrong while reading the data"};
             res.json(resObj);
+            logger.debug("something went wrong while reading the data");
           
          }
-         if (result[0].field1==""|| result.length === 0) {
+         if (result.length === 0 || result[0].field1=="") {
             var resObj = {status:"info", infoCode:"101", infoDesc:"No Records found"};
             res.json(resObj);
+            logger.debug(resObj);  
          
         }
         else{
         
          var resObj = {status:"success", data:result};
          res.json(resObj);
+         logger.debug("success");  
+
          }
       })
  };
@@ -95,6 +119,7 @@ var convertTheCsvToJson = function(req, res, fileName){
     catch(err){
         var resObj = {status:"failure", errorCode:"102", errorDesc:"something went wrong while reading the data"};
         res.json(resObj);
+       logger.debug(resObj);
   };  
 
 });  
@@ -107,7 +132,7 @@ var convertTheCsvToJson = function(req, res, fileName){
 *Arguments:
 */ 
 app.post("/upload/data",upload.any(), function(req, res) {
-       console.log(req.files);
+      
        res.redirect("http://localhost:8080/");
         
     }); 
