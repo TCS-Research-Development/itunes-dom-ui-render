@@ -38,12 +38,12 @@ var convertTheCsvToJson = function(req, res, fileName){
         if(err){
            var resObj = {status:"failure", errorCode:"100", errorDesc:"something went wrong while reading the data"};
             res.json(resObj);
-            res.end();
+          
          }
-         if (!result || result.length === 0) {
+         if (result.length === 0) {
             var resObj = {status:"info", infoCode:"101", infoDesc:"No Records found"};
             res.json(resObj);
-            res.end();
+         
         }
         else{
          var resObj = {status:"success", data:result};

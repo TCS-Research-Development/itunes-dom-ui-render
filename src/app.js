@@ -22,6 +22,7 @@ var notFound = React.createClass({
 
 
 var Album = React.createClass({
+  
 render: function()
  {
    return(
@@ -137,11 +138,12 @@ var App = React.createClass({
      success: function (data, text) {
       console.log(data);
       if(data.status == "info")
-      alert("No data found");
+      alert('No Data Found');	
       if(data.status == "failure")
       alert("Error occured while reading the data..check whether you have proper data in temp folder or not");
       if(data.status == "success")
       {
+      
       this.setState(data);
       }
      }.bind(this),
