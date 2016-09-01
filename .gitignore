@@ -1,2 +1,5 @@
+# include everything except the following directories.
 node_modules/
 docs/
+static/bundle.js
+
