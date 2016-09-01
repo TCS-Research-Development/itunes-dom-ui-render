@@ -14,7 +14,6 @@ var flag = 0;
 
 
 
-
 var Album = React.createClass({
 // Add mixin 
   mixins: [LoggerMixin],  
@@ -129,14 +128,15 @@ var App = React.createClass({
    },*/
   
   loadData: function(){
-	
   $.ajax({
      type: "get", url: "/getItunes",
      success: function (data, text) {
       console.log(data);
       if(data.status == "info")
+
       {alert('No Data Found'); 
           flag = 1;
+
       }
       if(data.status == "failure")
       alert("Error occured while reading the data..check whether you have proper data in temp folder or not");
