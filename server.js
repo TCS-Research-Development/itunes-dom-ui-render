@@ -11,7 +11,24 @@ var fs = require("fs");
 var csv = require("csv");
 var bodyParser = require('body-parser');
 var multer  = require('multer'); 
+var log4js = require("log4js");
+log4js.configure({
+  appenders: [
+	            {
+	            	type: "console"
+	            },
+	            {
+	            	type: "file",
+	            	filename: "test.log",
+	            	category: "iTunes"
+	            }
+	]
+});
 
+var logger = log4js.getLogger("iTunes");
+logger.setLevel("DEBUG");
+
+logger.debug("log test!!!!");
 
 /* Registering express middleware to expose server data as JSON */  
 app.use(express.static('static'));

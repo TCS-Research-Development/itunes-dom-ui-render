@@ -27,6 +27,7 @@
     "express": "^4.13.4",
     "jest-cli": "^14.1.0",
     "jquery": "^2.2.3",
+    "log4js": "^0.6.38",
     "multer": "^1.2.0",
     "react": "^15.0.2",
     "react-addons-css-transition-group": "^15.3.1",
