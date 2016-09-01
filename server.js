@@ -1,3 +1,9 @@
+
+/** 
+ * Include all npms to render server compomnent 
+ * along with custome Modules
+ */
+
 var express = require('express');
 var app = express();
 var Converter = require("csvtojson").Converter;
@@ -5,31 +11,48 @@ var fs = require("fs");
 var csv = require("csv");
 var bodyParser = require('body-parser');
 var multer  = require('multer'); 
-  
+
+
+/* Registering express middleware to expose server data as JSON */  
 app.use(express.static('static'));
 
-
-//function to set destination and filename to the uploaded file.
+/**
+ * Name: storage 
+ * Description: It sets destination file(upload CSV) path , creates temp directory and rename 
+ *              CSV file name with UnixTime Stamp(Eg: 1450787121.csv) with "filename" Callback function: 
+ * Arguments : file ,
+ */
 var storage = multer.diskStorage({
    destination: function (req, file, cb) {
+     /* Application Path to store uploaded CSC in ".temp " directory  */
      var dir = './temp';
+
+     /* Filesystem to handle the temp directory availability in app path  */
      if (!fs.existsSync(dir)){
-      fs.mkdirSync(dir);
-      console.log("directory doesn't exist");
-      }
-     else{
-      console.log("directory exist");
+         fs.mkdirSync(dir);
+         console.log("directory doesn't exist");
+      }else{
+        console.log("directory exist");
       }
      cb(null, './temp')
    },
-  filename: function (req, file, cb) {
+     /* returns UnixTime Stamp String */
+     filename: function (req, file, cb) {
      cb(null, Math.floor(Date.now()/1000) + '.csv')
    }
 })
-var upload = multer({ storage: storage });
+
+/* Passing storage object to multer , for more refer : https://www.npmjs.com/package/multer  */
+var upload = multer({ storage: storage});
 
  
-//function to convert csv to json and send the response object.
+
+/**
+ *  Name: convertTheCsvToJson
+ *  Description:This function is to convert csv file into json and send the response object.
+ *  Arguments:name of the file.
+ */
+
 var convertTheCsvToJson = function(req, res, fileName){
   var converter = new Converter({});
   fileName = "./temp/"+ fileName;
@@ -40,20 +63,27 @@ var convertTheCsvToJson = function(req, res, fileName){
             res.json(resObj);
           
          }
-         if (result.length === 0) {
+         if (result[0].field1==""|| result.length === 0) {
             var resObj = {status:"info", infoCode:"101", infoDesc:"No Records found"};
             res.json(resObj);
          
         }
         else{
+        
          var resObj = {status:"success", data:result};
          res.json(resObj);
          }
       })
  };
 
+
+
+ /*
+ * Name: get method.
+ * Description:This method is to get the csv file from the temp directory and sends the response to the UI.
+ * Arguments: request and response objects.
  
- //get service to get the csv file from the temp directory. 
+ */ 
   app.get('/getItunes',function(req,res){
     try{
     var path="./temp/";
@@ -70,14 +100,21 @@ var convertTheCsvToJson = function(req, res, fileName){
 });  
 
 
-//post method to upload the csv file into the temp deirectory.
+
+/*
+*Name:post method.
+*Description:This method is to upload the csv file into the temp directory.
+*Arguments:
+*/ 
 app.post("/upload/data",upload.any(), function(req, res) {
        console.log(req.files);
-      res.redirect("http://localhost:8080/");
+       res.redirect("http://localhost:8080/");
         
     }); 
 
 var server=app.listen(8080, function(){
       console.log('itune app listening on port 8080');
 });
+
+
 module.exports = server;
