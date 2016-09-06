@@ -7,22 +7,16 @@ var $ = require('jquery');
 var Rb = require('react-bootstrap');
 var Modal = require('react-bootstrap').Modal;
 var Button = require('react-bootstrap').Button;
+var Alert = require('react-bootstrap').Alert;
+var flag = 0;
 
 
-
-var Info= React.createClass({
-   render: function() {
-  return(<div>
-  <h2>Page NOT FOUND 404</h2>
-  </div>)
-
-  }
-  });
 
 
 
 var Album = React.createClass({
-  
+// Add mixin 
+  mixins: [LoggerMixin],  
 render: function()
  {
    return(
@@ -38,31 +32,9 @@ render: function()
  }
 });
 
-var CsvUpload = React.createClass({
-  displayName: 'AppComponent',
+const ModalInstance = React.createClass({
   // Add mixin 
   mixins: [LoggerMixin],
-  render: function() {
-    return(<div>
-      <section id="upload-data-panel">
-          <form id="upload-form" action="/upload/data" method="post" encType="multipart/form-data">
-        
-           
-           
-              
-                <input type="file" name="csvdata" accept="text/cvs" />
-            
-                <input type="submit" name="submit" value="submit"/>
-            
-       
-            </form>
-      </section>
-    </div>)
-  }
-
-  });
-
-const ModalInstance = React.createClass({
  getInitialState(){
     return { showModal: false };
   },
@@ -105,15 +77,39 @@ const ModalInstance = React.createClass({
 }
 });
 
+const Failure = React.createClass({
+  // Add mixin 
+  mixins: [LoggerMixin],
+  render: function(){
+  return(
+  <Alert bsStyle="danger">
+    <strong>Sorry!!!</strong> There is no such file.
+  </Alert>
+);
+}
+});
+
+const Warning = React.createClass({
+  // Add mixin 
+  mixins: [LoggerMixin],
+  render: function(){
+  return(
+  <Alert bsStyle="warning">
+    <strong>Oops!!!</strong> Seems like the file is empty.
+  </Alert>
+);
+}
+});
+
 var App = React.createClass({
   displayName: 'AppComponent',
   // Add mixin 
   mixins: [LoggerMixin],
   getInitialState: function() {
-    return {"status":{},"data":[]};
+    return {"status":{},"data":null};
   },
    
-   componentDidMount() {
+   componentWillMount() {
       this.log('Component DID MOUNT!');
       this.loadData();
    },
@@ -137,9 +133,10 @@ var App = React.createClass({
      success: function (data, text) {
       console.log(data);
       if(data.status == "info")
-      {
-      alert("no record found");
-    
+
+      {alert('No Data Found'); 
+          flag = 1;
+
       }
       if(data.status == "failure")
       alert("Error occured while reading the data..check whether you have proper data in temp folder or not");
@@ -166,6 +163,19 @@ var App = React.createClass({
      console.log(err);
 
   }
+
+if (!(this.state.data))
+{
+  return(<div>
+  <div>
+            <ModalInstance />
+        </div>
+  <Warning />
+  </div>
+
+  )
+}
+else{
  return (
       <div>
           
@@ -185,6 +195,7 @@ var App = React.createClass({
       </div>
     );
   }
+}
   });
 
 

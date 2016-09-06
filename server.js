@@ -1,4 +1,3 @@
-
 /** 
  * Include all npms to render server compomnent 
  * along with custome Modules
@@ -20,7 +19,7 @@ log4js.configure({
 	            {
 	            	type: "file",
 	            	filename: "test.log",
-	            	category: "my_project"
+	            	category: "Itune_project"
 	            }
 	]
 });
