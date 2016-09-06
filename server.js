@@ -6,7 +6,8 @@
 var express = require('express');
 var app = express();
 var Converter = require("csvtojson").Converter;
-var fs = require("fs");
+//var fs = require("fs");
+var fs = require('extfs');
 var csv = require("csv");
 var bodyParser = require('body-parser');
 var multer  = require('multer'); 
@@ -108,6 +109,10 @@ var convertTheCsvToJson = function(req, res, fileName){
  
  */ 
   app.get('/getItunes',function(req,res){
+    fs.isEmpty('./temp', function (empty) {
+      if(!empty)
+   {
+    
     try{
     var path="./temp/";
     var filesArry = fs.readdirSync(path);
@@ -121,7 +126,16 @@ var convertTheCsvToJson = function(req, res, fileName){
        logger.debug(resObj);
   };  
 
+   }
+   else{
+     var resObj = {status:"info", errorCode:"103", errorDesc:"There is no data in the directory"};
+        res.json(resObj);
+       logger.debug(resObj);
+     }
+
+});
 });  
+
 
 
 
