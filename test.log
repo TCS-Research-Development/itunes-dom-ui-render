@@ -16,3 +16,9 @@
 [2016-09-01 19:23:11.572] [DEBUG] my_project - success
 [2016-09-01 19:27:57.554] [DEBUG] my_project - log test!!!!
 [2016-09-01 19:28:05.165] [DEBUG] my_project - success
+[2016-09-06 11:26:09.351] [DEBUG] my_project - log test!!!!
+[2016-09-06 11:26:15.873] [DEBUG] my_project - success
+[2016-09-06 11:26:27.860] [DEBUG] my_project - success
+[2016-09-06 11:26:53.911] [DEBUG] my_project - success
+[2016-09-06 11:27:07.147] [DEBUG] my_project - directory exist
+[2016-09-06 11:27:07.530] [DEBUG] my_project - success
