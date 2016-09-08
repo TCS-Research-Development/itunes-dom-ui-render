@@ -1,13 +1,19 @@
 var React = require('react');
-//var LoggerMixin = require('react-logger');
+var Rb = require('react-bootstrap');
+var Button = require('react-bootstrap').Button;
+var LoggerMixin = require('react-logger');
+var App = require('./app.js');
 
 var NotFound = React.createClass({
-  // Add mixin 
- render: function() {
+  mixins: [LoggerMixin],  
+  render: function() {
   return(<div>
   <h2>Page NOT FOUND 404</h2>
-  </div>)
-
+  <a href="http://localhost:8080">
+  <Button className="btn-primary" > Home </Button>
+  </a>
+  </div>
+  )
   }
   });
 
