@@ -123,6 +123,9 @@ var convertTheCsvToJson = function(req, res, fileName){
 
 });  
 
+app.get('*', function (req, res){
+  res.sendFile(__dirname+ '/static/index.html')
+});
 
 
 /*

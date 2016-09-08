@@ -8,8 +8,7 @@ var NotFound = require('./notfound.js');
 
 ReactDOM.render((
     <Router history = {BrowserHistory}>
-        <Route path = "/" component = {App}>
+        <Route path = "/" component = {App} />
          <Route path = "*" component = {NotFound} />
-         </Route>
     </Router> 
    ),document.getElementById('main'));

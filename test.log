@@ -1,0 +1,21 @@
+[2016-09-03 16:05:33.484] [DEBUG] my_project - log test!!!!
+[2016-09-03 16:05:37.077] [DEBUG] my_project - success
+[2016-09-03 16:08:23.506] [DEBUG] my_project - directory exist
+[2016-09-03 16:08:23.877] [DEBUG] my_project - { status: 'info', infoCode: '101', infoDesc: 'No Records found' }
+[2016-09-03 16:08:46.241] [DEBUG] my_project - directory exist
+[2016-09-03 16:08:46.543] [DEBUG] my_project - success
+[2016-09-06 12:47:03.480] [DEBUG] my_project - log test!!!!
+[2016-09-06 12:47:19.312] [DEBUG] my_project - success
+[2016-09-06 12:55:17.593] [DEBUG] my_project - log test!!!!
+[2016-09-06 12:55:24.274] [DEBUG] my_project - success
+[2016-09-06 13:02:06.047] [DEBUG] my_project - success
+[2016-09-06 13:04:34.110] [DEBUG] my_project - log test!!!!
+[2016-09-06 13:07:49.527] [DEBUG] my_project - directory exist
+[2016-09-06 13:07:49.558] [DEBUG] my_project - success
+[2016-09-06 13:10:01.201] [DEBUG] my_project - success
+[2016-09-06 13:10:23.293] [DEBUG] my_project - success
+[2016-09-06 13:42:11.470] [DEBUG] my_project - log test!!!!
+[2016-09-06 13:42:20.204] [DEBUG] my_project - success
+[2016-09-06 13:44:44.043] [DEBUG] my_project - log test!!!!
+[2016-09-06 13:44:50.301] [DEBUG] my_project - success
+[2016-09-06 16:34:03.234] [DEBUG] my_project - success
