@@ -134,8 +134,9 @@ var convertTheCsvToJson = function(req, res, fileName){
      }
 
 });
-});  
-
+}); 
+ 
+//Routing Fix
 app.get('*', function (req, res){
   res.sendFile(__dirname+ '/static/index.html')
 });
